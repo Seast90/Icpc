@@ -11,7 +11,7 @@ ll ans = 0;
 		ans%=mod;
 	}
 
-    cin >> n >> k;
+    cin >> n >> k; // fac[n], fac[k] 
     f[0] = 0;
     rep(i,1,k+2){
     	f[i]=add(f[i-1],qm(i,k));
