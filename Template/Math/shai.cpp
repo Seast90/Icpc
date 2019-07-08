@@ -34,7 +34,7 @@ struct Math{
 			s[i] = add(s[i-1], mul(phi[i],i));
 	}
 	unordered_map < int ,int > w;
-	int du(int n){
+	int du(int n){ // maybe long long 
 		if(n<=N) return s[n];
 		if(w[n]) return w[n];
 		int ans = mul(mul(n+1,n),mul(mul(2,n)+1,inv6));
