@@ -38,6 +38,21 @@ struct LongChain{
 		if(dep[x] - dep[top[x]] > k) return D[top[x]][dep[x]-dep[top[x]]-k-1];
 		return U[top[x]][k-dep[x]+dep[top[x]]-1];
 	}
+	void cal(int x,int p,int g[]){
+		g[0] = 1;
+		if(son[x]) cal(son[x],x,g+1), ans[x] = ans[son[x]]+1;
+		for(auto u:v[x]){
+			if(u==p || u==son[x]) continue;
+			int l= md[u] - dep[u]+1, lx=md[x]-dep[x]+1;
+			cal(u,x,g+lx);
+			rep(i,1,l+1){
+				g[i] = g[i] + g[i+lx-1];
+				if(g[i]>g[ans[x]] || ((g[i]==g[ans[x]])&&(i<ans[x])))
+						ans[x] = i;
+			}
+		}
+		if(g[ans[x]]==1) ans[x] = 0;
+	}
 	void gao(){
 		dfs(1,1);
 		dfs1(1,1);
