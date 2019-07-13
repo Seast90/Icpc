@@ -1,23 +1,13 @@
-int get_size(int x,int pre){
-	siz[x] = 1;
-	for(int i=head[x], v=e[i].to; i ; i=e[i].next, v=e[i].to)
-	if (pre!=v && !f[v]) siz[x]+= get_size(v,x);
-	return siz[x];
-}
 void  get_dis(int x,int pre,int d){
 	dis[++cnt] = d;
 	for(int i=head[x],v=e[i].to;i;i=e[i].next, v= e[i].to)
 	if (!f[v]&& v!=pre)  get_dis(v,x,d+e[i].w);
 }
-void get_root(int x,int pre){
-	int num = tot - siz[x]; 
-	for(int i=head[x],v=e[i].to;i;i=e[i].next, v =e[i].to)
-	if (!f[v]&& v!=pre) get_root(v, x), num = max(num, siz[v]);
-	if (num< minn)	{
-          minn = num;
-          root = x;
-	}
-}
+void dfssz(int x,int fa,int Sz,int &rt){
+        sz[x] = 1;
+        for(auto t : g[x]) if(!vis[t]&&t!=fa) dfssz(t,x,Sz,rt) , sz[x]+=sz[t];
+        if(!rt && sz[x]*2>Sz) rt=x;
+ }
 int work(int x,int d){
 	cnt = 0;
 	get_dis(x,0,d);
@@ -30,10 +20,7 @@ int work(int x,int d){
 	return num;
 }
 int get_ans(int x){
-	cnt = 0;
-	minn = INF;
-	tot = get_size(x,0);
-	get_root(x, 0);
+	int rt=0;dfssz(x,0,0,rt);dfssz(x,0,sz[x],rt=0);
 	f[root] = 1;
 	int sum = work(root, 0);
 	for(int i=head[root], v=e[i].to; i ;i = e[i].next, v= e[i].to)
