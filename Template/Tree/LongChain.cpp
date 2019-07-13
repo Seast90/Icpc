@@ -43,7 +43,7 @@ struct LongChain{
 		if(son[x]) cal(son[x],x,g+1), ans[x] = ans[son[x]]+1;
 		for(auto u:v[x]){
 			if(u==p || u==son[x]) continue;
-			int l= md[u] - dep[u]+1, lx=md[x]-dep[x]+1;
+			int l=md[u]-dep[u]+1, lx=md[x]-dep[x]+1;
 			cal(u,x,g+lx);
 			rep(i,1,l+1){
 				g[i] = g[i] + g[i+lx-1];
