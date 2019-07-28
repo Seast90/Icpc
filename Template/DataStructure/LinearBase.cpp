@@ -1,4 +1,4 @@
-struct LinearBase{
+struct LB{
     ll f[65];
     int pos[65];
     void insert(ll x,int y){
@@ -27,3 +27,18 @@ struct LinearBase{
         return a[x];
     }   
 };    
+void merge(const LB &a,LB &b,LB &ans){
+    tmp  =v = a;
+    rep(i,0,65)if(b[i]){
+        ll x = b[i], now = 0;
+        int g = 0;
+        for(int j=64;j>=0;j--) if(x>>j&1){
+            if(!tmp[j]){
+                g = 1; tmp[j] = x; v[j] = now;
+                break;
+            }
+            x ^= tmp[j]; now^=v[j];
+        }
+        if(!g) ans.insert(now);
+    }
+}
