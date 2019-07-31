@@ -35,3 +35,13 @@ struct NTT{
 		//rep(i, 0, N) cout << a[i] << endl;
 	}
 } ntt;
+void solve(int l,int r){
+	if(l==r) return ;
+	int mid = l+r>>1, len = r-l+1;
+	solve(l,mid);
+	rep(i, l, mid+1) a[i-l] = f[i];
+	rep(i, l, r+1) b[i-l] = g[i-l];
+	T.doit(a, b, mid-l+1, len);
+	rep(i, mid+1, r+1) f[i] = add(f[i],a[i-l]);
+	solve(mid+1, r);
+}
