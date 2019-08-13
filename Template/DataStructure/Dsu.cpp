@@ -8,8 +8,7 @@ struct dsu{
     }
     inline void merge(int pre,int &rt,int l,int r,int pos,int Fa){
         rt=++cnt;ls[rt]=ls[pre],rs[rt]=rs[pre];
-        if(l==r)
-        {
+        if(l==r) {
             fa[rt]=Fa;
             dep[rt]=dep[pre];
             return ;
