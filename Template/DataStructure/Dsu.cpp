@@ -21,7 +21,7 @@ struct dsu{
     inline void update(int rt,int l,int r,int pos){
         if(l==r){dep[rt]++;return ;}
         int mid = l+r>>1;
-        if(pos<=mid)update(ls[rt],l,mid,pos);
+        if(pos<= mid)update(ls[rt],l,mid,pos);
         else update(rs[rt],mid+1,r,pos);
     }
     inline int query(int rt,int l,int r,int pos) {
