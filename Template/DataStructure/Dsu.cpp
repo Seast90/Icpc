@@ -30,7 +30,7 @@ struct dsu{
         else return query(rs[rt],mid+1,r,pos);
     }
     inline int find(int rt,int pos) {
-        int now=query(rt,1,n,pos);
+        int now=query(rt,1,n,pos); // n ! ! ! ! !
         if(fa[now]==pos)return now;
         return find(rt,fa[now]);
     }
