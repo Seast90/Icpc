@@ -1,3 +1,4 @@
+int cnt, fa[maxn*40], ls[maxn*40], rs[maxn*40], dep[maxn*40], T[maxn], n;
 struct dsu{
     inline void build(int &rt,int l,int r){
         rt=++cnt;
