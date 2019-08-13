@@ -35,9 +35,9 @@ struct dsu{
         if(fa[now]==pos)return now;
         return find(rt,fa[now]);
     }
-    inline void uion(int t,int x,int y){
-    	T[t] = T[t-1];
-	    int X=find(T[t],x) ,Y=find(T[t],y);
+	inline void uion(int t,int x,int y){
+		T[t] = T[t-1];
+		int X=find(T[t],x) ,Y=find(T[t],y);
 		if(fa[X]!=fa[Y]){
 			if(dep[X]>dep[Y])swap(X,Y);
 			merge(T[t-1],T[t],1,n,fa[X],fa[Y]);
