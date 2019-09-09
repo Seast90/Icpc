@@ -1,6 +1,3 @@
-const int M = 1 << 17 << 1;
-const db pi = acos(-1);
-
 struct vir{
 	db r, i;
 	vir(db r = 0.0, db i = 0.0) : r(r), i(i){}
@@ -8,10 +5,11 @@ struct vir{
 	vir operator +(const vir &c) {return vir(r + c.r, i + c.i);}
 	vir operator -(const vir &c) {return vir(r - c.r, i - c.i);}
 	vir operator *(const vir &c) {return vir(r * c.r - i * c.i, r * c.i + i * c.r);}
-} a[M], b[M], w[2][M];
+} w[2][M];
 
 struct FFT{
 	int N, na, nb, rev[M];
+	vir A[M], B[M];
 	void fft(vir *a, int f){
 		vir x, y;
 		rep(i, 0, N) if (i < rev[i]) swap(a[i], a[rev[i]]);
@@ -29,13 +27,16 @@ struct FFT{
 			w[1][i].i = -w[1][i].i;
 		}
 	}	
-	void doit(vir *a, vir *b, int na, int nb){ // [0, na)
+	void doit(int *a,int *b, int &na, int nb){ // [0, na)
 		for (N = 1; N < na + nb - 1; N <<= 1);
-		rep(i, na, N) a[i] = vir(0, 0);
-		rep(i, nb, N) b[i] = vir(0, 0);
-		work(), fft(a, 0), fft(b, 0);
-		rep(i, 0, N) a[i] = a[i] * b[i];
-		fft(a, 1);
+		rep(i, 0, na) A[i] = vir(a[i], 0); rep(i, na, N) A[i] = vir(0, 0);
+		rep(i, 0, nb) B[i] = vir(b[i], 0); rep(i, nb, N) B[i] = vir(0, 0);
+		work(), fft(A, 0), fft(B, 0);
+		rep(i, 0, N) A[i] = A[i] * B[i];
+		fft(A, 1); 
+		rep(i, 0, N) a[i] = (int)(A[i].r + 0.5);  
+		na = N;
+		while(na && a[na - 1] == 0) na--;
 		//rep(i, 0, N) a[i].print();
 	}
 } fft;
