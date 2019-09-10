@@ -5,6 +5,8 @@ struct vir{
 	vir operator +(const vir &c) {return vir(r + c.r, i + c.i);}
 	vir operator -(const vir &c) {return vir(r - c.r, i - c.i);}
 	vir operator *(const vir &c) {return vir(r * c.r - i * c.i, r * c.i + i * c.r);}
+	vir operator *(const double &c) {return vir(r * c,i * c);}
+	vir operator /(const double &c) {return vir(r / c,i / c);}
 } w[2][M];
 
 struct FFT{
