@@ -1,4 +1,4 @@
-struct Excrt{
+struct Ex_CRT{
 	ll a[maxn], b[maxn]; // a%b
 	int n;
 	void init(int _n){
