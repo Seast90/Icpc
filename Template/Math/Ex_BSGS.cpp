@@ -1,5 +1,5 @@
 unordered_map<int, int > ha;
-inline int ex_BSGS(int x,int z,int p){
+inline int Ex_BSGS(int x,int z,int p){
     if(z == 1) return 0;
 	int k = 0, a = 1;
 	for(int d=__gcd(x,p);d!=1;d=__gcd(x,p)){
