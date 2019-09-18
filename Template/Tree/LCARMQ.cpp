@@ -23,6 +23,6 @@ struct LCARMQ{
         return rmin(a[i][x] , a[i][y+1-(1<<i)]);
     }
     int dis(int x,int y){
-    	return dep[x] + dep[y] - 2 * dep(lca(x, y));
-	}
-};
+    	return dep[x] + dep[y] - 2 * dep[lca(x, y)];
+    }
+}
