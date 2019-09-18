@@ -6,7 +6,7 @@ struct LCARMQ{
     void add(int x){ a[0][L++] = x;}
     void dfs(int x,int fa,const vi e[]){
         lft[x]=L;add(x);
-        for(auto u : e[x]) if(t!=fa) dep[u]=dep[x]+1,dfs(u,x,e),add(x);
+        for(auto u : e[x]) if(u!=fa) dep[u]=dep[x]+1,dfs(u,x,e),add(x);
     }
     void Build(const vi e[]){
         L = 0;dfs(1,0,e);dep[0] = -1;
