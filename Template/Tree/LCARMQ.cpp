@@ -4,12 +4,12 @@ struct LCARMQ{
     int a[20][N] , lft[N] , dep[N] , lg[N] , L;
     int rmin(int x,int y){return dep[x] < dep[y] ? x : y;}
     void add(int x){ a[0][L++] = x;}
-    void dfs(int c,int fa,const vi g[]){
-        lft[c]=L;add(c);
-        for(auto t : g[c]) if(t!=fa) dep[t]=dep[c]+1,dfs(t,c,g),add(c);
+    void dfs(int x,int fa,const vi e[]){
+        lft[x]=L;add(x);
+        for(auto u : e[x]) if(t!=fa) dep[u]=dep[x]+1,dfs(u,x,e),add(x);
     }
-    void Build(const vi g[]){
-        L = 0;dfs(1,0,g);dep[0] = -1;
+    void Build(const vi e[]){
+        L = 0;dfs(1,0,e);dep[0] = -1;
         rep(i,2,L) lg[i]=lg[i>>1]+1;
         rep(i,1,20){
             int lim = L+1-(1<<i);
