@@ -1,4 +1,4 @@
-struct Segment(){
+struct Segment{
 	ll sum[maxn<<2], mn[maxn<<2], la[maxn<<2], h[maxn];
 	int cnt[maxn<<2], n, q;
 	inline void pu(int rt){
