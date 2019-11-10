@@ -14,3 +14,15 @@ void fwt(int a[],int n,int t){
 		}
 	}
 }
+
+void fst(int a[],int n, int N){ // j|k == i , j&k == 0; O((2^m)*m*m)
+    rep(i,0,N) cnt[i] = __builtin_popcount(i);
+	int m = cnt[N-1];
+	rep(i,0,n)	d[cnt[a[i]]][a[i]]++;
+	rep(i,0,m)	fwt(d[i], N, 3); // or
+	rep(i,0,m) rep(j,0,i+1)
+		rep(k,0,N)
+			e[i][k] = add(e[i][k], mul(d[i-j][k], d[j][k]));
+	rep(i,0,m) fwt(e[i], N, -3);
+	rep(i,0,N) c[i] = e[cnt[i]][i];
+}
