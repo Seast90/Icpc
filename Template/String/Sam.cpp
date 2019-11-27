@@ -1,11 +1,11 @@
 //所有跟节点有关的信息都要开两倍空间
 struct NODE{
 	int ch[26];
-	int len,fa;
+	int len,fa,cnt;
 	void clear() {
-		memset(ch,0,sizeof(ch));len = 0;
+		memset(ch,0,sizeof(ch));len = 0; 
 	}
-}dian[N<<1];
+}dian[maxn<<1];
 int last,tot;// tot 节点数量
 void init(){
 	last = 1;tot = 1;
@@ -14,6 +14,7 @@ void init(){
 void add(int c) {
 	int p = last;int np = last = ++tot;
 	dian[np].clear();
+	dian[np].cnt = 1;
 	dian[np].len = dian[p].len+1;
 	for(;p&&!dian[p].ch[c];p = dian[p].fa) dian[p].ch[c] = np;
 	if(!p) dian[np].fa = 1;
@@ -22,7 +23,7 @@ void add(int c) {
 		if(dian[q].len == dian[p].len+1) dian[np].fa = q;
 		else {
 			int nq = ++tot;dian[nq].clear();
-			dian[nq] = dian[q];
+			dian[nq] = dian[q]; dian[nq].cnt = 0;
 			dian[nq].len = dian[p].len+1;
 			dian[q].fa = dian[np].fa = nq;
 			for(;p&&dian[p].ch[c] == q;p = dian[p].fa) dian[p].ch[c] = nq;
@@ -30,7 +31,7 @@ void add(int c) {
 	}
 }
 //id[i]： 按 len 排序后，排在第 i 位的结点编号
-int cnt[N<<1],id[N<<1];
+int cnt[maxn<<1],id[maxn<<1];
 void bucketsort() {
 	memset(cnt,0,sizeof(cnt));
 	rep(i,1,tot+1) ++cnt[dian[i].len];
@@ -41,19 +42,29 @@ void topogao() {
 	bucketsort();
 	per(i,1,tot+1) {
 		int u = id[i],fa = dian[u].fa;
-		...;
+		dian[fa].cnt += dian[u].cnt;
 	}
 }
-void run(char *t) {
+char s[maxn<<1], str[maxn<<1];
+int ans, vis[maxn<<1];
+void run(char *t,int n,int x) {
 	int u = 1,len = 0;
-	for(int i = 0;t[i];i++) {
+	rep(i,0,2*n) {
 		int c = t[i] - 'a';
 		while(u && !dian[u].ch[c]) u = dian[u].fa,len = dian[u].len;
 		if(u) {
 			u = dian[u].ch[c];
 			len++;
 		}else u = 1,len = 0;
-		mx[u] = max(len,mx[u]);
+		if(i>=n && len >= n){
+			int tmp = u;
+			while(tmp && dian[dian[tmp].fa].len>=n) tmp = dian[tmp].fa;
+			if(!tmp) tmp = 1; 
+			if(vis[tmp]!=x){
+				vis[tmp] = x;
+				ans += dian[tmp].cnt;
+			}
+		}
 	}
 }
 /* 
