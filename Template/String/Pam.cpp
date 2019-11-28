@@ -31,7 +31,6 @@ struct Palindromic_Tree {
         return x;
     }
     void add(int c) {
-        c -= 'a';
         s[++sno] = c;
         int cur = get_fail(last);
         if (!t[cur][c]) {
@@ -45,3 +44,4 @@ struct Palindromic_Tree {
     }
     void count() { per(i, 0, no) cnt[fail[i]] += cnt[i]; }
 };
+obj.add(s[i]-'a')
