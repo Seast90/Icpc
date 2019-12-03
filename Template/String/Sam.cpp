@@ -12,8 +12,7 @@ void init(){
 	dian[1].clear();
 }
 void add(int c) {
-	int p = last;int np = last = ++tot;
-	int now = dian[p].ch[c];
+	int p = last, now = dian[p].ch[c];
 	if(now){
 		if(dian[now].len == dian[p].len+1) last = now;
 		else {
@@ -26,6 +25,7 @@ void add(int c) {
 			last = nq;
 		}
 	}else {
+		int np = last = ++tot;
 		dian[np].clear();
 		dian[np].cnt = 1;
 		dian[np].len = dian[p].len+1;
