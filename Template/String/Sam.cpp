@@ -13,20 +13,34 @@ void init(){
 }
 void add(int c) {
 	int p = last;int np = last = ++tot;
-	dian[np].clear();
-	dian[np].cnt = 1;
-	dian[np].len = dian[p].len+1;
-	for(;p&&!dian[p].ch[c];p = dian[p].fa) dian[p].ch[c] = np;
-	if(!p) dian[np].fa = 1;
-	else {
-		int q = dian[p].ch[c];
-		if(dian[q].len == dian[p].len+1) dian[np].fa = q;
+	int now = dian[p].ch[c];
+	if(now){
+		if(dian[now].len == dian[p].len+1) last = now;
 		else {
-			int nq = ++tot;dian[nq].clear();
-			dian[nq] = dian[q]; dian[nq].cnt = 0;
-			dian[nq].len = dian[p].len+1;
-			dian[q].fa = dian[np].fa = nq;
-			for(;p&&dian[p].ch[c] == q;p = dian[p].fa) dian[p].ch[c] = nq;
+			int nq = ++tot; dian[nq].clear();
+			dian[nq] = dian[now];
+			dian[nq].len = dian[p].len + 1;
+			dian[nq].cnt = 0;
+			dian[now].fa = nq;
+			for(;p&&dian[p].ch[c] == now;p = dian[p].fa) dian[p].ch[c] = nq;
+			last = nq;
+		}
+	}else {
+		dian[np].clear();
+		dian[np].cnt = 1;
+		dian[np].len = dian[p].len+1;
+		for(;p&&!dian[p].ch[c];p = dian[p].fa) dian[p].ch[c] = np;
+		if(!p) dian[np].fa = 1;
+		else {
+			int q = dian[p].ch[c];
+			if(dian[q].len == dian[p].len+1) dian[np].fa = q;
+			else {
+				int nq = ++tot;dian[nq].clear();
+				dian[nq] = dian[q]; dian[nq].cnt = 0;
+				dian[nq].len = dian[p].len+1;
+				dian[q].fa = dian[np].fa = nq;
+				for(;p&&dian[p].ch[c] == q;p = dian[p].fa) dian[p].ch[c] = nq;
+			}
 		}
 	}
 }
