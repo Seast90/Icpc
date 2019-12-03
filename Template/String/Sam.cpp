@@ -60,25 +60,15 @@ void topogao() {
 	}
 }
 char s[maxn<<1], str[maxn<<1];
-int ans, vis[maxn<<1];
-void run(char *t,int n,int x) {
+void run(char *s,int n,int x) {
 	int u = 1,len = 0;
-	rep(i,0,2*n) {
-		int c = t[i] - 'a';
+	rep(i,0,n) {
+		int c = s[i] - 'a';
 		while(u && !dian[u].ch[c]) u = dian[u].fa,len = dian[u].len;
 		if(u) {
 			u = dian[u].ch[c];
 			len++;
 		}else u = 1,len = 0;
-		if(i>=n && len >= n){
-			int tmp = u;
-			while(tmp && dian[dian[tmp].fa].len>=n) tmp = dian[tmp].fa;
-			if(!tmp) tmp = 1; 
-			if(vis[tmp]!=x){
-				vis[tmp] = x;
-				ans += dian[tmp].cnt;
-			}
-		}
 	}
 }
 /* 
