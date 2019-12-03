@@ -60,7 +60,7 @@ void topogao() {
 	}
 }
 char s[maxn<<1], str[maxn<<1];
-void run(char *s,int n,int x) {
+void run(char *s,int n) {
 	int u = 1,len = 0;
 	rep(i,0,n) {
 		int c = s[i] - 'a';
