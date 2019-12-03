@@ -14,12 +14,12 @@ void init(){
 void add(int c) {
 	int p = last, now = dian[p].ch[c];
 	if(now){
-		if(dian[now].len == dian[p].len+1) last = now;
+		if(dian[now].len == dian[p].len+1) dian[now].cnt++, last = now;
 		else {
 			int nq = ++tot; dian[nq].clear();
 			dian[nq] = dian[now];
 			dian[nq].len = dian[p].len + 1;
-			dian[nq].cnt = 0;
+			dian[nq].cnt = 1;
 			dian[now].fa = nq;
 			for(;p&&dian[p].ch[c] == now;p = dian[p].fa) dian[p].ch[c] = nq;
 			last = nq;
