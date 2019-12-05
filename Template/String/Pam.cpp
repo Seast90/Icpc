@@ -30,7 +30,7 @@ struct Palindromic_Tree {
         while (s[sno-len[x]-1] != s[sno]) x = fail[x];
         return x;
     }
-    void add(int i,int x,int c) {
+    void add(int c) {
         s[++sno] = c;
         int cur = get_fail(last);
         if (!t[cur][c]) {
