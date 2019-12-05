@@ -13,9 +13,9 @@
 // sno:     添加的字符个数
 // no:      节点个数
 struct Palindromic_Tree {
-    int t[N][C], fail[N], cnt[N], flen[N], len[N], s[N], last, sno, no;
+    int t[maxn][26], fail[maxn], cnt[maxn], flen[maxn], len[maxn], s[maxn], last, sno, no;
     int newnode (int l) {
-        rep(i, 0, C) t[no][i] = 0;
+        memset(t[no], 0, sizeof(t[no]));
         cnt[no] = flen[no] = 0;
         len[no] = l;
         return no++;
@@ -30,7 +30,7 @@ struct Palindromic_Tree {
         while (s[sno-len[x]-1] != s[sno]) x = fail[x];
         return x;
     }
-    void add(int c) {
+    void add(int i,int x,int c) {
         s[++sno] = c;
         int cur = get_fail(last);
         if (!t[cur][c]) {
@@ -43,5 +43,5 @@ struct Palindromic_Tree {
         cnt[last]++;
     }
     void count() { per(i, 0, no) cnt[fail[i]] += cnt[i]; }
-};
+}obj;
 obj.add(s[i]-'a')
