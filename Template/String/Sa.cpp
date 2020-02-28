@@ -42,7 +42,7 @@ struct DA{
 		rep(i,0,n) in[i] = s[i] - 'a' + 1;
 		in[n] = 0;
 	}
-	void Build() {
+	void build() {
 		in[n] = 0;
 		da(in,n+1,300);//[1,300] is the set of in[]
 		cal_h(in,n,rk);
