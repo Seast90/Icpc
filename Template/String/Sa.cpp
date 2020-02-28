@@ -36,7 +36,7 @@
 	}
 
 struct DA{
-	int p[18][N],rk[N],in[N],Log[N],n;
+	int p[20][N],rk[N],in[N],Log[N],n;
 	void init(string s) {
 		n = s.length();
 		rep(i,0,n) in[i] = s[i] - 'a' + 1;
