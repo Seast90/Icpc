@@ -1,38 +1,33 @@
-/*
-【注意】
-  1. 缩点时，因为遍历的是原图的点，所以只需要加单向边，另一个方向的边在遍历到对面的点时就会加入。
-*/
-
-bool bri[N];
-vector <pii> e[N];
-int dfn[N], low[N], bcc[N], S[N], top, cnt, no;
-void BCC(int u, int eid) {
-    dfn[u] = low[u] = ++no;
-    S[top++] = u;
-    for (auto o : e[u]) {
-        int v = o.fi, id = o.se;
-        if (!dfn[v]) {
-            BCC(v, id);
-            low[u] = min(low[u], low[v]);
-            if (low[v] > dfn[u]) bri[id] = 1;
-        } else if (id != eid) {
-            low[u] = min(low[u], dfn[v]);
+// key contains the id of edges
+// _ starts from 0
+namespace BCC{
+    const int N = 202020;
+    vi key , bcc[N];
+    int dfn[N] , low[N] , id[N] , st[N] , _st , _;
+    void dfs(int c,int dep,vector<pii> g[]){
+        int cc=0;st[_st++]=c;
+        dfn[c]=low[c]=dep;
+        for(auto e:g[c]){
+            int t=e.fi;
+            if(!dfn[t]){
+                dfs(t,dep+1,g);
+                low[c]=min(low[c],low[t]);
+                if(low[t]>dfn[c]) key.pb(e.se);
+            } else if(dfn[t] != dfn[c] - 1 || cc++)
+                low[c] = min(low[c] , dfn[t]);
+        }
+        if(low[c]==dfn[c]){
+            do{id[st[--_st]]=_;}while(st[_st]!=c);
+            _++;
         }
     }
-    if (low[u] == dfn[u]) {
-        ++cnt;
-        do { bcc[S[--top]] = cnt; } while (S[top] != u);
+    int solve(int n,vector<pii> g[]){
+        fill_n(dfn,n,_=0);
+        fill_n(low,n,_st=0);
+        fill_n(bcc,n,key=vi());
+        rep(i,0,n) if(!dfn[i]) dfs(i,1,g);
+        rep(i,0,n) for(auto j:g[i]) if(id[i]!=id[j.fi])
+            bcc[id[i]].pb(id[j.fi]);
+        return _;
     }
-}
-
-vi e2[N];
-void run(int n) {
-    no = top = cnt = 0;
-    memset(dfn, 0, sizeof(dfn));
-    memset(bri, 0, sizeof(bri));
-    memset(bcc, 0, sizeof(bcc));
-    rep(i, 1, n+1) if (!dfn[i]) BCC(i, 0);
-    rep(i, 1, cnt+1) e2[i].clear();
-    rep(u, 1, n+1) for (auto o : e[u])
-        if (bcc[u] != bcc[o.fi]) e2[bcc[u]].pb(bcc[o.fi]);
-}
+};
