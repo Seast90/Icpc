@@ -84,6 +84,40 @@ int build(int* a,int n){	// 以 a[i] 为键值, 对数组 a 建树, 数组 a 下
 		ins(rt,newnode(a[i]));
 	return rt;
 }
+//  下标操作
+int qry(int u,int k){  //  查询 下标 k 的元素值
+	int ls=tr[u].ls,rs=tr[u].rs;
+	if (tr[ls].sz+1==k)	return tr[u].val;
+	if (tr[ls].sz+1<k)	return qry(rs,k-tr[ls].sz-1);
+	return qry(ls,k);
+}
+inline int qmin(int x,int k){  //查询 最右 小于 k 的下标
+	if(!x) return 0;
+	int rs = tr[x].rs, ls = tr[x].ls;
+	if(rs && tr[rs].min < k) return qmin(rs, k) + tr[ls].sz + 1;
+	if(tr[x].val < k) return tr[ls].sz + 1;
+	return qmin(ls, k);
+}
+
+inline void change(int x,int k,int v){ // 更改 下标 k 的值为 v
+	if(tr[tr[x].ls].sz + 1 == k) {
+		tr[x].val = v;
+		pushup(x);
+		return ;
+	} 
+	if(tr[tr[x].ls].sz >= k) 
+		change(tr[x].ls, k, v);
+	else change(tr[x].rs, k - tr[tr[x].ls].sz - 1, v);
+	pushup(x);
+}
+inline ll qsum(int l,int r){  // 区间 [l, r] 求和
+	int x, y, z;
+	split(root, r, x, y);
+	split(x, l - 1, x, z);
+	ll res = tr[z].sum;
+	root = merge(merge(x, z), y);
+	return res;
+}
 /*
 若树上每个节点代表的是一段区间
 可如下封装实现恰好为 k的分裂
