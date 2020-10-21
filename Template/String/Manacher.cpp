@@ -14,6 +14,11 @@ void Manacher(char *s,int n,int *pa) {
 		while(0 <= p - pa[i] && q + pa[i] < n && s[p - pa[i]] == s[q + pa[i]])
 			pa[i]++;
 		if(q + pa[i] - 1 > r) j = i;
+		/*sum[i / 2 + 1]--;
+		sum[i / 2 - pa[i] + 1]++;*/  // 以 i 为 开始的回文串个数 
+		
+		sum[(i + 1) / 2]++;
+		sum[(i + 1) / 2 + pa[i]]--; // 以 i 为 结尾的回文串个数 
 	}
 }
 -------------------------------------
