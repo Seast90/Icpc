@@ -3,6 +3,10 @@ struct Math{
 	int inv2 = 500000004, inv6 = 166666668, N, n;
 	const int maxn=3000005;
 	const ll mod = 1e9+ 7;
+	void pre(){
+		inv[1]=1;
+		for(int i=2;i<=n;i++) inv[i]=(mod-mod/i)*inv[mod%i]%mod;
+	}
 	inline int add(int a,int b){
 		if ((a+=b)>=mod) a-=mod;
 		return a;
